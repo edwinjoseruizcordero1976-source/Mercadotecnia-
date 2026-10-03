@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MercatoHistoria 360: Investigación de Mercados, Sociedad Taína y Colonización</title>
+    <style>
+        :root {
+            --primary-blue: #002D62;
+            --accent-red: #CE1126;
+            --pure-white: #FFFFFF;
+            --off-white: #F4F6F9;
+            --dark-text: #1E293B;
+            --border-color: #CBD5E1;
+            --success-green: #0D9488;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--off-white);
+            color: var(--dark-text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: var(--pure-white);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border-top: 6px solid var(--primary-blue);
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), #001a3d);
+            color: var(--pure-white);
+            padding: 30px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: var(--pure-white);
+        }
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        .badge {
+            display: inline-block;
+            background: var(--accent-red);
+            color: var(--pure-white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .nav-tabs {
+            display: flex;
+            background: #E2E8F0;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+        .nav-tab {
+            flex: 1;
+            min-width: 200px;
+            padding: 14px 10px;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            background: #E2E8F0;
+            color: #475569;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .nav-tab.active {
+            background: var(--pure-white);
+            color: var(--primary-blue);
+            border-bottom: 3px solid var(--accent-red);
+        }
+        .tab-content {
+            padding: 30px;
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        h2 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-size: 1.35rem;
+            border-bottom: 2px solid var(--off-white);
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: var(--accent-red);
+            margin: 20px 0 10px 0;
+            font-size: 1.1rem;
+        }
+        p, li {
+            margin-bottom: 12px;
+            color: #334155;
+            font-size: 0.95rem;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .card {
+            background: var(--off-white);
+            border-left: 4px solid var(--primary-blue);
+            padding: 18px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        .card-red {
+            border-left-color: var(--accent-red);
+        }
+        .group-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: #F8FAFC;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+        .question-box {
+            background: var(--off-white);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+        .question-box p {
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+        }
+        .options label {
+            display: block;
+            background: var(--pure-white);
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+        .options label:hover {
+            border-color: var(--primary-blue);
+            background: #F0F4F8;
+        }
+        .options input {
+            margin-right: 10px;
+        }
+        .btn {
+            background: var(--primary-blue);
+            color: var(--pure-white);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background: #001a3d;
+        }
+        .btn-red {
+            background: var(--accent-red);
+        }
+        .btn-red:hover {
+            background: #a80d1d;
+        }
+        #lab-result-box {
+            display: none;
+            background: #E8F4FD;
+            border: 2px solid var(--primary-blue);
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--pure-white);
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        th {
+            background: var(--primary-blue);
+            color: var(--pure-white);
+        }
+        @media (max-width: 600px) {
+            .group-form {
+                grid-template-columns: 1fr;
+            }
+            .nav-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <span class="badge">Investigación de Mercados & Historia</span>
+        <h1>MercatoHistoria 360: Unidades III y IV</h1>
+        <p>Laboratorio grupal interactivo: De la Sociedad Taína y los Sistemas de Colonización a la Inteligencia de Mercados y Comportamiento del Consumidor.</p>
+    </header>
+
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab(event, 'tab-intro')">1. Puente Histórico-Mercadológico</button>
+        <button class="nav-tab" onclick="switchTab(event, 'tab-matrix')">2. Matriz Comparativa</button>
+        <button class="nav-tab" onclick="switchTab(event, 'tab-lab')">3. Laboratorio de Investigación</button>
+        <button class="nav-tab" onclick="switchTab(event, 'tab-export')">4. Reporte & Exportación</button>
+    </div>
+
+    <!-- TAB 1: INTRODUCCIÓN -->
+    <div id="tab-intro" class="tab-content active">
+        <h2>Conectando la Historia con la Investigación de Mercados</h2>
+        <p>Para los estudiantes de mercadotecnia, comprender el pasado histórico dominicano no es solo un ejercicio académico, sino el estudio del origen de los mercados, las cadenas de valor, los flujos logísticos y el comportamiento del consumidor en contextos de intercambio cultural.</p>
+        
+        <div class="card">
+            <h3>Unidad III: La Sociedad Taína y el Trueque (Economía de Intercambio)</h3>
+            <p>Los taínos organizaron una economía basada en la agricultura (conuco), la pesca y la artesanía, interconectada mediante el <strong>trueque (intercambio comercial y cultural)</strong> entre cacicazgos y con islas vecinas a través de redes de canoas. En investigación de mercados, esto representa el estudio primario del <em>comportamiento del consumidor</em>, la segmentación geográfica por recursos locales y la antropología del consumo comunitario.</p>
+        </div>
+
+        <div class="card card-red">
+            <h3>Unidad IV: Sistemas de Colonización (Siglos XV y XVI) y Monopolios Comerciales</h3>
+            <p>Con la llegada europea y la implantación de sistemas como las factorías colombinas, las encomiendas y las Leyes de Indias, se estableció el primer gran <strong>monopolio comercial transatlántico</strong> y la extracción intensiva de recursos. Desde la perspectiva de la investigación de mercados, estos sistemas simulan la investigación de mercados extractiva, la fijación de precios centralizados por monopolios, las barreras arancelarias coloniales y la imposición de marcas, productos y patrones de consumo forzados.</p>
+        </div>
+
+        <button class="btn" onclick="switchTab(event, 'tab-matrix')">Siguiente: Matriz Histórico-Mercadológica &rarr;</button>
+    </div>
+
+    <!-- TAB 2: MATRIZ COMPARATIVA -->
+    <div id="tab-matrix" class="tab-content">
+        <h2>Matriz de Análisis: Historia vs. Investigación de Mercados</h2>
+        <p>Esta tabla relaciona los procesos históricos de las Unidades III y IV con conceptos modernos de mercadotecnia:</p>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Proceso Histórico</th>
+                        <th>Dimensión Antropológica / Histórica</th>
+                        <th>Concepto en Investigación de Mercados</th>
+                        <th>Aplicación Práctica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>El Trueque Taíno (Unidad III)</strong></td>
+                        <td>Intercambio de excedentes agrícolas y artesanales entre cacicazgos.</td>
+                        <td><strong>Economía de Intercambio & Canales de Distribución B2B</strong></td>
+                        <td>Estudio de cadenas de suministro locales y comercio colaborativo sin intermediarios financieros.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>El Conuco (Unidad III)</strong></td>
+                        <td>Sistema de producción agrícola sostenible adaptado al trópico.</td>
+                        <td><strong>Segmentación de Nicho & Producto Local</strong></td>
+                        <td>Adaptación de la oferta de productos a las características geográficas y culturales del consumidor.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Factoría Colombina y Monopolio (Unidad IV)</strong></td>
+                        <td>Control estatal y comercial centralizado de la metrópoli sobre las Antillas.</td>
+                        <td><strong>Monopolio de Mercado & Barreras de Entrada</strong></td>
+                        <td>Análisis de mercados regulados, barreras comerciales y control absoluto de la cadena de suministro.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Encomiendas y Mano de Obra (Unidad IV)</strong></td>
+                        <td>Explotación de fuerza laboral nativa para la extracción de oro y agricultura.</td>
+                        <td><strong>Costos de Producción & Logística Operativa</strong></td>
+                        <td>Estudio del costo humano y operativo en la cadena de valor y logística de distribución primaria.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="btn" onclick="switchTab(event, 'tab-lab')">Ir al Laboratorio de Investigación &rarr;</button>
+    </div>
+
+    <!-- TAB 3: LABORATORIO DE INVESTIGACIÓN -->
+    <div id="tab-lab" class="tab-content">
+        <h2>Laboratorio Grupal: Caso Práctico de Mercadotecnia Histórica</h2>
+        <p>Reúnete con tu equipo de trabajo, analicen los siguientes desafíos de investigación de mercados inspirados en las Unidades III y IV, y registren sus respuestas.</p>
+
+        <div class="group-form">
+            <div class="form-group">
+                <label for="team-name">Nombre del Equipo o Grupo:</label>
+                <input type="text" id="team-name" placeholder="Ej. Grupo 1 - Estrategia Mercantil">
+            </div>
+            <div class="form-group">
+                <label for="team-members">Integrantes del Equipo:</label>
+                <input type="text" id="team-members" placeholder="Nombres de los estudiantes">
+            </div>
+        </div>
+
+        <div class="question-box">
+            <p>1. (Unidad III) Si tuvieras que diseñar un estudio de mercado etnográfico sobre los patrones de consumo e intercambio en los mercados y trueques taínos, ¿qué método de recolección de datos aplicarías?</p>
+            <div class="options">
+                <label><input type="radio" name="lq1" value="A"> A) Observación participante y análisis de rutas de navegación e intercambio entre cacicazgos.</label>
+                <label><input type="radio" name="lq1" value="B"> B) Encuestas masivas digitales con cuestionarios estructurados de opinión.</label>
+                <label><input type="radio" name="lq1" value="C"> C) Grupos focales virtuales con métricas de comercio electrónico B2C.</label>
+                <label><input type="radio" name="lq1" value="D"> D) Auditorías financieras de estados de resultados y balanzas de pago.</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <p>2. (Unidad IV) Durante el sistema de monopolio comercial de la Casa de Contratación en los siglos XV y XVI, ¿cómo se comportaría la demanda insatisfecha del consumidor colonial frente a la escasez de productos europeos?</p>
+            <div class="options">
+                <label><input type="radio" name="lq2" value="A"> A) Surgimiento de mercados negros, contrabando (como en la Banda Norte) y comercio informal transfronterizo.</label>
+                <label><input type="radio" name="lq2" value="B"> B) Fidelidad absoluta a los canales oficiales y aceptación de precios regulados por la corona.</label>
+                <label><input type="radio" name="lq2" value="C"> C) Disminución total del consumo sin búsqueda de sustitutos locales o importados.</label>
+                <label><input type="radio" name="lq2" value="D"> D) Creación de campañas publicitarias masivas para incentivar el producto oficial.</label>
+            </div>
+        </div>
+
+        <div class="question-box">
+            <p>3. (Análisis Integrado) Desde la perspectiva del marketing mix (4Ps: Producto, Precio, Plaza, Promoción), ¿cuál fue el mayor error estratégico en el intercambio comercial y cultural de la colonización del siglo XVI?</p>
+            <div class="options">
+                <label><input type="radio" name="lq3" value="A"> A) Ignorar la investigación previa del mercado local, imponiendo productos y tributos sin empatía cultural ni adaptabilidad al entorno.</label>
+                <label><input type="radio" name="lq3" value="B"> B) Exceso de inversión en publicidad digital en las rutas marítimas del Atlántico.</label>
+                <label><input type="radio" name="lq3" value="C"> C) Falta de segmentación demográfica en las ferias de Sevilla y Cádiz.</label>
+                <label><input type="radio" name="lq3" value="D"> D) Baja rotación de inventarios en los puertos de ultramar.</label>
+            </div>
+        </div>
+
+        <button class="btn btn-red" onclick="evaluateLab()">Calcular Diagnóstico y Generar Reporte</button>
+
+        <div id="lab-result-box">
+            <h3 id="lab-result-title" style="color: var(--primary-blue); margin-top:0;"></h3>
+            <p id="lab-result-desc"></p>
+            <p style="color: var(--success-green); font-weight: bold; margin-top: 10px;">✅ Análisis grupal registrado correctamente en el sistema local.</p>
+            
+            <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn" onclick="switchTab(event, 'tab-export')">Ver Reporte Final & Exportar</button>
+                <button class="btn btn-red" onclick="downloadJSONReport()">📥 Descargar Archivo JSON Grupal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: REPORTE Y EXPORTACIÓN -->
+    <div id="tab-export" class="tab-content">
+        <h2>Reporte Final de la Actividad Grupal</h2>
+        <p>Este informe recopila el diagnóstico de investigación de mercados aplicado a las Unidades III y IV. Puedes enviarlo directamente al docente o guardarlo como evidencia de trabajo grupal.</p>
+
+        <div class="card" id="report-summary-box">
+            <p><strong>Estado:</strong> <span id="rep-status">Aún no se ha calculado el laboratorio. Por favor, completa las respuestas en la pestaña anterior (Laboratorio de Investigación).</span></p>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
+            <button class="btn" onclick="sendTeacherEmail()">📧 Enviar Reporte por Correo al Docente</button>
+            <button class="btn" onclick="window.print()" style="background:#475569;">🖨️ Imprimir / Guardar en PDF</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let groupReportData = null;
+
+    function switchTab(event, tabId) {
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(t => t.classList.remove('active'));
+
+        const buttons = document.querySelectorAll('.nav-tab');
+        buttons.forEach(b => b.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function evaluateLab() {
+        const teamName = document.getElementById('team-name').value.trim();
+        const teamMembers = document.getElementById('team-members').value.trim();
+
+        if (!teamName || !teamMembers) {
+            alert('Por favor, ingresa el nombre del equipo y los integrantes antes de generar el reporte.');
+            return;
+        }
+
+        const lq1 = document.querySelector('input[name="lq1"]:checked');
+        const lq2 = document.querySelector('input[name="lq2"]:checked');
+        const lq3 = document.querySelector('input[name="lq3"]:checked');
+
+        if (!lq1 || !lq2 || !lq3) {
+            alert('Por favor, responde todas las preguntas del laboratorio.');
+            return;
+        }
+
+        const scoreMap = { A: 1, B: 0, C: 0, D: 0 };
+        const totalScore = (scoreMap[lq1.value] || 0) + (scoreMap[lq2.value] || 0) + (scoreMap[lq3.value] || 0);
+
+        let evaluationTitle = `Equipo: ${teamName} — Nivel de Maestría Analítica: ${totalScore}/3`;
+        let evaluationDesc = `Integrantes: ${teamMembers}. Su equipo ha demostrado una sólida comprensión sobre cómo la antropología del consumo taíno (Unidad III) y los sistemas de monopolio y contrabando de la colonización (Unidad IV) se fundamentan en principios clave de investigación de mercados, canales de distribución y comportamiento del consumidor.`;
+
+        groupReportData = {
+            teamName: teamName,
+            teamMembers: teamMembers,
+            score: totalScore,
+            answers: { q1: lq1.value, q2: lq2.value, q3: lq3.value },
+            timestamp: new Date().toLocaleString()
+        };
+
+        localStorage.setItem('market_history_group_report', JSON.stringify(groupReportData));
+
+        document.getElementById('lab-result-title').innerText = evaluationTitle;
+        document.getElementById('lab-result-desc').innerText = evaluationDesc;
+        document.getElementById('lab-result-box').style.display = 'block';
+
+        // Update tab 4
+        document.getElementById('rep-summary-box').innerHTML = `
+            <h3>Resumen del Equipo: ${teamName}</h3>
+            <p><strong>Integrantes:</strong> ${teamMembers}</p>
+            <p><strong>Puntuación de Análisis:</strong> ${totalScore} / 3</p>
+            <p><strong>Fecha y Hora:</strong> ${groupReportData.timestamp}</p>
+            <p><strong>Diagnóstico:</strong> El equipo vinculó con éxito los conceptos de comercio taíno y sistemas coloniales con la investigación de mercados.</p>
+        `;
+    }
+
+    function downloadJSONReport() {
+        if (!groupReportData) {
+            alert('Primero completa el laboratorio y calcula los resultados.');
+            return;
+        }
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(groupReportData, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `Reporte_MercadoHistoria_${groupReportData.teamName.replace(/\s+/g, '_')}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    }
+
+    function sendTeacherEmail() {
+        if (!groupReportData) {
+            alert('Primero completa el laboratorio y calcula los resultados.');
+            return;
+        }
+        const teacherEmail = "edwinjoseruizcordero1976@gmail.com";
+        const subject = encodeURIComponent(`Reporte Grupal MercatoHistoria 360 - ${groupReportData.teamName}`);
+        const body = encodeURIComponent(
+            `Estimado Profesor Edwin Ruiz,
+
+` +
+            `Presentamos el reporte de nuestra actividad grupal en MercatoHistoria 360 (Unidades III y IV):
+
+` +
+            `- Equipo: ${groupReportData.teamName}
+` +
+            `- Integrantes: ${groupReportData.teamMembers}
+` +
+            `- Puntuación de Análisis: ${groupReportData.score}/3
+` +
+            `- Fecha y Hora: ${groupReportData.timestamp}
+
+` +
+            `Atentamente,
+${groupReportData.teamMembers}`
+        );
+
+        window.location.href = `mailto:${teacherEmail}?subject=${subject}&body=${body}`;
+    }
+</script>
+
+</body>
+</html>
